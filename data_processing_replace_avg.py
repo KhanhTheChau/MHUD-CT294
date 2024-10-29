@@ -1,88 +1,57 @@
-# %%
 import pandas as pd
 import numpy as np
-
-data = pd.read_csv("./data/agaricus-lepiota.data")
-data
-
-# %%
-for col in data.columns:
-    print(f"{col}: {np.unique(data[col])}")
-
-# %%
-ms_col = []
-for col in data.columns:
-    value_col = np.unique(data[[col]])
-    for value in value_col:
-        if value == "?":
-            ms_col.append(col)
-            
-ms_col
-
-# %%
-encode_data = data
-
-decode_ms = {}
-
-for col in ms_col:
-    values, counts = np.unique(encode_data[col], return_counts=True)
-    decode_ms[col] = {}
-    for value, count in zip(values, counts):
-        decode_ms[col][value] = count 
-
-
-# %%
-# Convert data to numeric value
 from sklearn.preprocessing import LabelEncoder
-
-label_encoder = LabelEncoder()
-
-for col in encode_data.columns:
-    encode_data[col] = label_encoder.fit_transform(encode_data[col])
-
-for col in encode_data.columns:
-    print(f"{col}: {np.unique(encode_data[col])}, type: {encode_data[col].dtype}")
-    
-
-# %%
-encode_ms = {}
-
-for col in ms_col:
-    values, counts = np.unique(encode_data[col], return_counts=True)
-    encode_ms[col] = {}
-    for value, count in zip(values, counts):
-        encode_ms[col][value] = count 
-
-
-# %%
-print(encode_ms)
-print(decode_ms)
-
-# %%
-# Match encode_ms and decode_ms we will see LableEncoder convert missing values to different values
-for col in ms_col:
-    values = np.unique(encode_data[col])
-
-    avg = int(sum(values)/(len(values))) 
-    print(f"{col}: avg = {avg}")
-    encode_data[col].replace(0, avg, inplace=True)
-
-ms_col
-
-# %%
-for col in encode_data.columns:
-    print(f"{col}: {np.unique(encode_data[col])}, type: {encode_data[col].dtype}")
-
-# %%
 from sklearn.model_selection import train_test_split
 
-X = data.iloc[:,1:]
-y = data.iloc[:,:1]
+class Data:
+    def __init__(self, file_path, test_size=1/3.0, random_state=42):
+        self.data = pd.read_csv(file_path)
+        self.test_size = test_size
+        self.random_state = random_state
+        self.ms_col = []
+        self.encode_data = self.data.copy()
+        self.decode_ms = {}
+        self.encode_ms = {}
+        
+        # Xử lý các giá trị missing
+        self.find_missing_columns()
+        self.calculate_missing_values()
+        
+        # Encode dữ liệu
+        self.label_encode_data()
+        self.handle_missing_encoded_values()
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/3.0, random_state=42)
-print("Length of X train: ", len(X_train))
-print("Length of X test: ", len(X_test))
-print("Length of y train: ", len(y_train))
-print("Length of y test: ", len(y_test))
+    def find_missing_columns(self):
+        for col in self.data.columns:
+            if "?" in np.unique(self.data[col]):
+                self.ms_col.append(col)
 
+    def calculate_missing_values(self):
+        for col in self.ms_col:
+            values, counts = np.unique(self.data[col], return_counts=True)
+            self.decode_ms[col] = {value: count for value, count in zip(values, counts)}
 
+    def label_encode_data(self):
+        label_encoder = LabelEncoder()
+        for col in self.encode_data.columns:
+            self.encode_data[col] = label_encoder.fit_transform(self.encode_data[col])
+
+    def handle_missing_encoded_values(self):
+        for col in self.ms_col:
+            values = np.unique(self.encode_data[col])
+            avg = int(sum(values) / len(values))
+            self.encode_data[col].replace(0, avg, inplace=True)
+
+    def split_data(self):
+        X = self.encode_data.iloc[:, 1:]
+        y = self.encode_data.iloc[:, :1]
+        return train_test_split(X, y, test_size=self.test_size, random_state=self.random_state)
+
+# Sử dụng class
+data_processor = Data("./data/agaricus-lepiota.data")
+X_train, X_test, y_train, y_test = data_processor.split_data()
+
+print("Length of X train:", len(X_train))
+print("Length of X test:", len(X_test))
+print("Length of y train:", len(y_train))
+print("Length of y test:", len(y_test))
