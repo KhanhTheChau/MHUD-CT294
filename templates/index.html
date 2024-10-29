@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Ứng dụng phân loại nấm</title>
+</head>
+<body>
+    <h1>Phân loại nấm theo đặc tính sinh học</h1>
+    
+    <!-- Form nhập trực tiếp 22 thuộc tính -->
+    <form method="post" action="/predict">
+        <input type="hidden" name="form-type" value="manual">
+
+        <!-- Dropdown cho từng thuộc tính -->
+        <label for="cap-shape">cap-shape:</label>
+        <select id="cap-shape" name="cap-shape">
+            <option value="b">b (bell)</option>
+            <option value="c">c (conical)</option>
+            <option value="x">x (convex)</option>
+            <option value="f">f (flat)</option>
+            <option value="k">k (knobbed)</option>
+            <option value="s">s (sunken)</option>
+        </select>
+        
+        <label for="cap-surface">cap-surface:</label>
+        <select id="cap-surface" name="cap-surface">
+            <option value="f">f (fibrous)</option>
+            <option value="g">g (grooves)</option>
+            <option value="y">y (scaly)</option>
+            <option value="s">ss (mooth)</option>
+        </select>
+
+        <label for="cap-color">cap-color:</label>
+        <select id="cap-color" name="cap-color">
+            <option value="n">n (brown)</option>
+            <option value="b">b (buff)</option>
+            <option value="c">c (cinnamon)</option>
+            <option value="g">g (gray)</option>
+            <option value="r">r (green)</option>
+            <option value="p">p (pink)</option>
+            <option value="u">u (purple)</option>
+            <option value="e">e (red)</option>
+            <option value="w">w (white)</option>
+            <option value="y">y (yellow)</option>
+        </select>
+
+        <br>
+
+        <label for="bruises">bruises:</label>
+        <select id="bruises" name="bruises">
+            <option value="t">t (bruises)</option>
+            <option value="f">f (no)</option>
+        </select>
+
+        <br>
+
+        <label for="odor">odor:</label>
+        <select id="odor" name="odor">
+            <option value="t">a (almond)</option>
+            <option value="f">l (anise)</option>
+            <option value="f">c (creosote)</option>
+            <option value="f">y (fishy)</option>
+            <option value="f">f (foul)</option>
+            <option value="f">m (musty)</option>
+            <option value="f">n (none)</option>
+            <option value="f">p (pungent)</option>
+            <option value="f">s (spicy)</option>
+        </select>
+
+
+        <br>
+        <label for="gill-attachment">gill-attachment:</label>
+        <select id="gill-attachment" name="gill-attachment">
+            <option value="a">a (attached)</option>
+            <option value="d">d (descending)</option>
+            <option value="f">f (free)</option>
+            <option value="n">n (notched)</option>
+        </select>
+
+        <label for="gill-spacing">gill-spacing:</label>
+        <select id="gill-spacing" name="gill-spacing">
+            <option value="c">c (close)</option>
+            <option value="w">w (crowded)</option>
+            <option value="d">d (distant)</option>
+        </select>
+
+        <label for="gill-size">gill-size:</label>
+        <select id="gill-size" name="gill-size">
+            <option value="b">b (broad)</option>
+            <option value="n">n (narrow)</option>
+        </select>
+
+        <label for="gill-color">gill-color:</label>
+        <select id="gill-color" name="gill-color">
+            <option value="k">k (black)</option>
+            <option value="n">n (brown)</option>
+            <option value="b">b (buff)</option>
+            <option value="h">h (chocolate)</option>
+            <option value="g">g (gray)</option>
+            <option value="r">r (green)</option>
+            <option value="o">o (orange)</option>
+            <option value="p">p (pink)</option>
+            <option value="u">u (purple)</option>
+            <option value="e">e (red)</option>
+            <option value="w">w (white)</option>
+            <option value="y">y (yellow)</option>
+        </select>
+
+        <br>
+
+        <label for="stalk-shape">stalk-shape:</label>
+        <select id="stalk-shape" name="stalk-shape">
+            <option value="e">e (enlarging)</option>
+            <option value="t">t (tapering)</option>
+        </select>
+
+        <label for="stalk-root">stalk-root:</label>
+        <select id="stalk-root" name="stalk-root">
+            <option value="b">b (bulbous)</option>
+            <option value="c">c (club)</option>
+            <option value="u">u (cup)</option>
+            <option value="e">e (equal)</option>
+            <option value="z">z (rhizomorphs)</option>
+            <option value="r">r (rooted)</option>
+            <option value="?">? (missing)</option>
+        </select>
+
+        <br>
+
+        <label for="stalk-surface-above-ring">stalk-surface-above-ring:</label>
+        <select id="stalk-surface-above-ring" name="stalk-surface-above-ring">
+            <option value="f">f (fibrous)</option>
+            <option value="y">y (scaly)</option>
+            <option value="k">k (silky)</option>
+            <option value="s">s (smooth)</option>
+        </select>
+
+        <label for="stalk-surface-below-ring">stalk-surface-below-ring:</label>
+        <select id="stalk-surface-below-ring" name="stalk-surface-below-ring">
+            <option value="f">f (fibrous)</option>
+            <option value="y">y (scaly)</option>
+            <option value="k">k (silky)</option>
+            <option value="s">s (smooth)</option>
+        </select>
+
+        <br>
+
+        <label for="stalk-color-above-ring">stalk-color-above-ring:</label>
+        <select id="stalk-color-above-ring" name="stalk-color-above-ring">
+            <option value="n">n (brown)</option>
+            <option value="b">b (buff)</option>
+            <option value="c">c (cinnamon)</option>
+            <option value="g">g (gray)</option>
+            <option value="o">o (orange)</option>
+            <option value="p">p (pink)</option>
+            <option value="e">e (red)</option>
+            <option value="w">w (white)</option>
+            <option value="y">y (yellow)</option>
+        </select>
+
+        <label for="stalk-color-below-ring">stalk-color-below-ring:</label>
+        <select id="stalk-color-below-ring" name="stalk-color-below-ring">
+            <option value="n">n (brown)</option>
+            <option value="b">b (buff)</option>
+            <option value="c">c (cinnamon)</option>
+            <option value="g">g (gray)</option>
+            <option value="o">o (orange)</option>
+            <option value="p">p (pink)</option>
+            <option value="e">e (red)</option>
+            <option value="w">w (white)</option>
+            <option value="y">y (yellow)</option>
+        </select>
+
+        <br>
+
+        <label for="veil-type">veil-type:</label>
+        <select id="veil-type" name="veil-type">
+            <option value="p">p (partial)</option>
+            <option value="u">u (universal)</option>
+        </select>
+
+ 
+        <label for="veil-color">veil-color:</label>
+        <select id="veil-color" name="veil-color">
+            <option value="n">n (brown)</option>
+            <option value="o">o (orange)</option>
+            <option value="w">w (white)</option>
+            <option value="y">y (yellow)</option>
+        </select>
+
+        <br>
+
+   
+        <label for="ring-number">ring-number:</label>
+        <select id="ring-number" name="ring-number">
+            <option value="n">n (none)</option>
+            <option value="o">o (one)</option>
+            <option value="t">t (two)</option>
+        </select>
+
+
+        <label for="ring-type">ring-type:</label>
+        <select id="ring-type" name="ring-type">
+            <option value="c">c (cobwebby)</option>
+            <option value="e">e (evanescent)</option>
+            <option value="f">f (flaring)</option>
+            <option value="l">l (large)</option>
+            <option value="n">n (none)</option>
+            <option value="p">p (pendant)</option>
+            <option value="s">s (sheathing)</option>
+            <option value="z">z (zone)</option>
+        </select>
+
+        <br>
+        
+        <label for="spore-print-color">spore-print-color:</label>
+        <select id="spore-print-color" name="spore-print-color">
+            <option value="k">k (black)</option>
+            <option value="n">n (brown)</option>
+            <option value="b">b (buff)</option>
+            <option value="h">h (chocolate)</option>
+            <option value="r">r (green)</option>
+            <option value="o">o (orange)</option>
+            <option value="u">u (purple)</option>
+            <option value="w">w (white)</option>
+            <option value="y">y (yellow)</option>
+        </select>
+
+        <br>
+        <label for="population">population:</label>
+        <select id="population" name="population">
+            <option value="a">a (abundant)</option>
+            <option value="c">c (clustered)</option>
+            <option value="n">n (numerous)</option>
+            <option value="s">s (scattered)</option>
+            <option value="v">v (several)</option>
+            <option value="y">y (solitary)</option>
+        </select>
+
+        <br>
+        <label for="habitat">habitat:</label>
+        <select id="habitat" name="habitat">
+            <option value="g">g (grasses)</option>
+            <option value="l">l (leaves)</option>
+            <option value="m">m (meadows)</option>
+            <option value="p">p (paths)</option>
+            <option value="u">u (urban)</option>
+            <option value="w">w (waste)</option>
+            <option value="d">d (woods)</option>
+        </select>
+
+        
+        
+        <button type="submit">Phân loại</button>
+    </form>
+
+    <!-- Form tải lên file CSV -->
+    <form method="post" action="/predict" enctype="multipart/form-data">
+        <input type="hidden" name="form-type" value="csv">
+        <label for="file">Tải lên file CSV:</label>
+        <input type="file" id="file" name="file">
+        <button type="submit">Phân loại từ file CSV</button>
+    </form>
+
+    {% if result %}
+    <h2>Kết quả:</h2>
+    <ul>
+
+        <li>{{ result }}</li>
+
+    </ul>
+    {% endif %}
+</body>
+</html>
