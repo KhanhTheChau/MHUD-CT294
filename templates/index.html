@@ -1,274 +1,528 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Ứng dụng phân loại nấm</title>
-</head>
-<body>
-    <h1>Phân loại nấm theo đặc tính sinh học</h1>
-    
-    <!-- Form nhập trực tiếp 22 thuộc tính -->
-    <form method="post" action="/predict">
-        <input type="hidden" name="form-type" value="manual">
+    <head>
+        <meta charset="UTF-8">
+        <title>Mushroom Classifier</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous">
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+    <body>
+        <h1>Classification of fungi by biological characteristics </h1>
+        <div class="row">
+            <div class="col-8">
+                <form method="post" action="/predict">
+                    <h2>Predict from features</h2>
+                    <input type="hidden" name="form-type" value="manual">
+                    <div class="row">
+                        <div class="col-6">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Attributes</th>
+                                        <th>Values</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><label
+                                                for="cap-shape">cap-shape:</label></td>
+                                        <td>
+                                            <select id="cap-shape"
+                                                name="cap-shape">
+                                                <option value="b">b
+                                                    (bell)</option>
+                                                <option value="c">c
+                                                    (conical)</option>
+                                                <option value="x">x
+                                                    (convex)</option>
+                                                <option value="f">f
+                                                    (flat)</option>
+                                                <option value="k">k
+                                                    (knobbed)</option>
+                                                <option value="s">s
+                                                    (sunken)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="cap-surface">cap-surface:</label></td>
+                                        <td>
+                                            <select id="cap-surface"
+                                                name="cap-surface">
+                                                <option value="f">f
+                                                    (fibrous)</option>
+                                                <option value="g">g
+                                                    (grooves)</option>
+                                                <option value="y">y
+                                                    (scaly)</option>
+                                                <option value="s">s
+                                                    (smooth)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="cap-color">cap-color:</label></td>
+                                        <td>
+                                            <select id="cap-color"
+                                                name="cap-color">
+                                                <option value="n">n
+                                                    (brown)</option>
+                                                <option value="b">b
+                                                    (buff)</option>
+                                                <option value="c">c
+                                                    (cinnamon)</option>
+                                                <option value="g">g
+                                                    (gray)</option>
+                                                <option value="r">r
+                                                    (green)</option>
+                                                <option value="p">p
+                                                    (pink)</option>
+                                                <option value="u">u
+                                                    (purple)</option>
+                                                <option value="e">e
+                                                    (red)</option>
+                                                <option value="w">w
+                                                    (white)</option>
+                                                <option value="y">y
+                                                    (yellow)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="bruises">bruises:</label></td>
+                                        <td>
+                                            <select id="bruises" name="bruises">
+                                                <option value="t">t
+                                                    (bruises)</option>
+                                                <option value="f">f
+                                                    (no)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="odor">odor:</label></td>
+                                        <td>
+                                            <select id="odor" name="odor">
+                                                <option value="a">a
+                                                    (almond)</option>
+                                                <option value="l">l
+                                                    (anise)</option>
+                                                <option value="c">c
+                                                    (creosote)</option>
+                                                <option value="y">y
+                                                    (fishy)</option>
+                                                <option value="f">f
+                                                    (foul)</option>
+                                                <option value="m">m
+                                                    (musty)</option>
+                                                <option value="n">n
+                                                    (none)</option>
+                                                <option value="p">p
+                                                    (pungent)</option>
+                                                <option value="s">s
+                                                    (spicy)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="gill-attachment">gill-attachment:</label></td>
+                                        <td>
+                                            <select id="gill-attachment"
+                                                name="gill-attachment">
+                                                <option value="a">a
+                                                    (attached)</option>
+                                                <option value="d">d
+                                                    (descending)</option>
+                                                <option value="f">f
+                                                    (free)</option>
+                                                <option value="n">n
+                                                    (notched)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="gill-spacing">gill-spacing:</label></td>
+                                        <td>
+                                            <select id="gill-spacing"
+                                                name="gill-spacing">
+                                                <option value="c">c
+                                                    (close)</option>
+                                                <option value="w">w
+                                                    (crowded)</option>
+                                                <option value="d">d
+                                                    (distant)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="gill-size">gill-size:</label></td>
+                                        <td>
+                                            <select id="gill-size"
+                                                name="gill-size">
+                                                <option value="b">b
+                                                    (broad)</option>
+                                                <option value="n">n
+                                                    (narrow)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="gill-color">gill-color:</label></td>
+                                        <td>
+                                            <select id="gill-color"
+                                                name="gill-color">
+                                                <option value="k">k
+                                                    (black)</option>
+                                                <option value="n">n
+                                                    (brown)</option>
+                                                <option value="b">b
+                                                    (buff)</option>
+                                                <option value="h">h
+                                                    (chocolate)</option>
+                                                <option value="g">g
+                                                    (gray)</option>
+                                                <option value="r">r
+                                                    (green)</option>
+                                                <option value="o">o
+                                                    (orange)</option>
+                                                <option value="p">p
+                                                    (pink)</option>
+                                                <option value="u">u
+                                                    (purple)</option>
+                                                <option value="e">e
+                                                    (red)</option>
+                                                <option value="w">w
+                                                    (white)</option>
+                                                <option value="y">y
+                                                    (yellow)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="stalk-shape">stalk-shape:</label></td>
+                                        <td>
+                                            <select id="stalk-shape"
+                                                name="stalk-shape">
+                                                <option value="e">e
+                                                    (enlarging)</option>
+                                                <option value="t">t
+                                                    (tapering)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="stalk-root">stalk-root:</label></td>
+                                        <td>
+                                            <select id="stalk-root"
+                                                name="stalk-root">
+                                                <option value="b">b
+                                                    (bulbous)</option>
+                                                <option value="c">c
+                                                    (club)</option>
+                                                <option value="u">u
+                                                    (cup)</option>
+                                                <option value="e">e
+                                                    (equal)</option>
+                                                <option value="z">z
+                                                    (rhizomorphs)</option>
+                                                <option value="r">r
+                                                    (rooted)</option>
+                                                <option value="?">?
+                                                    (missing)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Attributes</th>
+                                        <th>Values</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-        <!-- Dropdown cho từng thuộc tính -->
-        <label for="cap-shape">cap-shape:</label>
-        <select id="cap-shape" name="cap-shape">
-            <option value="b">b (bell)</option>
-            <option value="c">c (conical)</option>
-            <option value="x">x (convex)</option>
-            <option value="f">f (flat)</option>
-            <option value="k">k (knobbed)</option>
-            <option value="s">s (sunken)</option>
-        </select>
-        
-        <label for="cap-surface">cap-surface:</label>
-        <select id="cap-surface" name="cap-surface">
-            <option value="f">f (fibrous)</option>
-            <option value="g">g (grooves)</option>
-            <option value="y">y (scaly)</option>
-            <option value="s">ss (mooth)</option>
-        </select>
+                                    <tr>
+                                        <td><label
+                                                for="stalk-surface-above-ring">stalk-surface-above-ring:</label></td>
+                                        <td>
+                                            <select
+                                                id="stalk-surface-above-ring"
+                                                name="stalk-surface-above-ring">
+                                                <option value="f">f
+                                                    (fibrous)</option>
+                                                <option value="y">y
+                                                    (scaly)</option>
+                                                <option value="k">k
+                                                    (silky)</option>
+                                                <option value="s">s
+                                                    (smooth)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="stalk-surface-below-ring">stalk-surface-below-ring:</label></td>
+                                        <td>
+                                            <select
+                                                id="stalk-surface-below-ring"
+                                                name="stalk-surface-below-ring">
+                                                <option value="f">f
+                                                    (fibrous)</option>
+                                                <option value="y">y
+                                                    (scaly)</option>
+                                                <option value="k">k
+                                                    (silky)</option>
+                                                <option value="s">s
+                                                    (smooth)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="stalk-color-above-ring">stalk-color-above-ring:</label></td>
+                                        <td>
+                                            <select id="stalk-color-above-ring"
+                                                name="stalk-color-above-ring">
+                                                <option value="n">n
+                                                    (brown)</option>
+                                                <option value="b">b
+                                                    (buff)</option>
+                                                <option value="c">c
+                                                    (cinnamon)</option>
+                                                <option value="g">g
+                                                    (gray)</option>
+                                                <option value="r">r
+                                                    (green)</option>
+                                                <option value="p">p
+                                                    (pink)</option>
+                                                <option value="u">u
+                                                    (purple)</option>
+                                                <option value="e">e
+                                                    (red)</option>
+                                                <option value="w">w
+                                                    (white)</option>
+                                                <option value="y">y
+                                                    (yellow)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="stalk-color-below-ring">stalk-color-below-ring:</label></td>
+                                        <td>
+                                            <select id="stalk-color-below-ring"
+                                                name="stalk-color-below-ring">
+                                                <option value="n">n
+                                                    (brown)</option>
+                                                <option value="b">b
+                                                    (buff)</option>
+                                                <option value="c">c
+                                                    (cinnamon)</option>
+                                                <option value="g">g
+                                                    (gray)</option>
+                                                <option value="r">r
+                                                    (green)</option>
+                                                <option value="p">p
+                                                    (pink)</option>
+                                                <option value="u">u
+                                                    (purple)</option>
+                                                <option value="e">e
+                                                    (red)</option>
+                                                <option value="w">w
+                                                    (white)</option>
+                                                <option value="y">y
+                                                    (yellow)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="veil-type">veil-type:</label></td>
+                                        <td>
+                                            <select id="veil-type"
+                                                name="veil-type">
+                                                <option value="p">p
+                                                    (partial)</option>
+                                                <option value="u">u
+                                                    (universal)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="veil-color">veil-color:</label></td>
+                                        <td>
+                                            <select id="veil-color"
+                                                name="veil-color">
+                                                <option value="n">n
+                                                    (brown)</option>
+                                                <option value="o">o
+                                                    (orange)</option>
+                                                <option value="w">w
+                                                    (white)</option>
+                                                <option value="y">y
+                                                    (yellow)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="ring-number">ring-number:</label></td>
+                                        <td>
+                                            <select id="ring-number"
+                                                name="ring-number">
+                                                <option value="n">n
+                                                    (none)</option>
+                                                <option value="o">o
+                                                    (one)</option>
+                                                <option value="t">t
+                                                    (two)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="ring-type">ring-type:</label></td>
+                                        <td>
+                                            <select id="ring-type"
+                                                name="ring-type">
+                                                <option value="e">e
+                                                    (evanescent)</option>
+                                                <option value="l">l
+                                                    (large)</option>
+                                                <option value="n">n
+                                                    (none)</option>
+                                                <option value="p">p
+                                                    (pendant)</option>
+                                                <option value="s">s
+                                                    (sheathing)</option>
+                                                <option value="f">f
+                                                    (flaring)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="spore-print-color">spore-print-color:</label></td>
+                                        <td>
+                                            <select id="spore-print-color"
+                                                name="spore-print-color">
+                                                <option value="k">k
+                                                    (black)</option>
+                                                <option value="n">n
+                                                    (brown)</option>
+                                                <option value="b">b
+                                                    (buff)</option>
+                                                <option value="h">h
+                                                    (chocolate)</option>
+                                                <option value="g">g
+                                                    (gray)</option>
+                                                <option value="r">r
+                                                    (green)</option>
+                                                <option value="o">o
+                                                    (orange)</option>
+                                                <option value="p">p
+                                                    (pink)</option>
+                                                <option value="u">u
+                                                    (purple)</option>
+                                                <option value="e">e
+                                                    (red)</option>
+                                                <option value="w">w
+                                                    (white)</option>
+                                                <option value="y">y
+                                                    (yellow)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="population">population:</label></td>
+                                        <td>
+                                            <select id="population"
+                                                name="population">
+                                                <option value="a">a
+                                                    (abundant)</option>
+                                                <option value="c">c
+                                                    (clustered)</option>
+                                                <option value="n">n
+                                                    (numerous)</option>
+                                                <option value="s">s
+                                                    (scattered)</option>
+                                                <option value="v">v
+                                                    (several)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label
+                                                for="habitat">habitat:</label></td>
+                                        <td>
+                                            <select id="habitat" name="habitat">
+                                                <option value="g">g
+                                                    (grasses)</option>
+                                                <option value="l">l
+                                                    (leaves)</option>
+                                                <option value="m">m
+                                                    (meadows)</option>
+                                                <option value="p">p
+                                                    (paths)</option>
+                                                <option value="u">u
+                                                    (urban)</option>
+                                                <option value="w">w
+                                                    (waste)</option>
+                                                <option value="d">d
+                                                    (woods)</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="btn btn-primary">Predict</button>
+                </form>
+            </div>
+            <div class="col-3">
+                <form method="post" action="/predict"
+                    enctype="multipart/form-data">
+                    <h2>Predict from CSV</h2>
+                    <input type="hidden" name="form-type" value="csv">
+                    <input type="file" id="file" name="file">
+                    <button type="submit">Predict CSV</button>
+                </form>
+                <div>
+                    <h3><b>Kết quả:</b>
+                        {% if result %}
+                        {{ result }}
+                        {% else %}
+                        No result to display
+                        {% endif %}
+                    </h3>
+                </div>
+            </div>
 
-        <label for="cap-color">cap-color:</label>
-        <select id="cap-color" name="cap-color">
-            <option value="n">n (brown)</option>
-            <option value="b">b (buff)</option>
-            <option value="c">c (cinnamon)</option>
-            <option value="g">g (gray)</option>
-            <option value="r">r (green)</option>
-            <option value="p">p (pink)</option>
-            <option value="u">u (purple)</option>
-            <option value="e">e (red)</option>
-            <option value="w">w (white)</option>
-            <option value="y">y (yellow)</option>
-        </select>
-
-        <br>
-
-        <label for="bruises">bruises:</label>
-        <select id="bruises" name="bruises">
-            <option value="t">t (bruises)</option>
-            <option value="f">f (no)</option>
-        </select>
-
-        <br>
-
-        <label for="odor">odor:</label>
-        <select id="odor" name="odor">
-            <option value="a">a (almond)</option>
-            <option value="l">l (anise)</option>
-            <option value="c">c (creosote)</option>
-            <option value="y">y (fishy)</option>
-            <option value="f">f (foul)</option>
-            <option value="m">m (musty)</option>
-            <option value="n">n (none)</option>
-            <option value="p">p (pungent)</option>
-            <option value="s">s (spicy)</option>
-        </select>
-
-
-        <br>
-        <label for="gill-attachment">gill-attachment:</label>
-        <select id="gill-attachment" name="gill-attachment">
-            <option value="a">a (attached)</option>
-            <option value="d">d (descending)</option>
-            <option value="f">f (free)</option>
-            <option value="n">n (notched)</option>
-        </select>
-
-        <label for="gill-spacing">gill-spacing:</label>
-        <select id="gill-spacing" name="gill-spacing">
-            <option value="c">c (close)</option>
-            <option value="w">w (crowded)</option>
-            <option value="d">d (distant)</option>
-        </select>
-
-        <label for="gill-size">gill-size:</label>
-        <select id="gill-size" name="gill-size">
-            <option value="b">b (broad)</option>
-            <option value="n">n (narrow)</option>
-        </select>
-
-        <label for="gill-color">gill-color:</label>
-        <select id="gill-color" name="gill-color">
-            <option value="k">k (black)</option>
-            <option value="n">n (brown)</option>
-            <option value="b">b (buff)</option>
-            <option value="h">h (chocolate)</option>
-            <option value="g">g (gray)</option>
-            <option value="r">r (green)</option>
-            <option value="o">o (orange)</option>
-            <option value="p">p (pink)</option>
-            <option value="u">u (purple)</option>
-            <option value="e">e (red)</option>
-            <option value="w">w (white)</option>
-            <option value="y">y (yellow)</option>
-        </select>
-
-        <br>
-
-        <label for="stalk-shape">stalk-shape:</label>
-        <select id="stalk-shape" name="stalk-shape">
-            <option value="e">e (enlarging)</option>
-            <option value="t">t (tapering)</option>
-        </select>
-
-        <label for="stalk-root">stalk-root:</label>
-        <select id="stalk-root" name="stalk-root">
-            <option value="b">b (bulbous)</option>
-            <option value="c">c (club)</option>
-            <option value="u">u (cup)</option>
-            <option value="e">e (equal)</option>
-            <option value="z">z (rhizomorphs)</option>
-            <option value="r">r (rooted)</option>
-            <option value="?">? (missing)</option>
-        </select>
-
-        <br>
-
-        <label for="stalk-surface-above-ring">stalk-surface-above-ring:</label>
-        <select id="stalk-surface-above-ring" name="stalk-surface-above-ring">
-            <option value="f">f (fibrous)</option>
-            <option value="y">y (scaly)</option>
-            <option value="k">k (silky)</option>
-            <option value="s">s (smooth)</option>
-        </select>
-
-        <label for="stalk-surface-below-ring">stalk-surface-below-ring:</label>
-        <select id="stalk-surface-below-ring" name="stalk-surface-below-ring">
-            <option value="f">f (fibrous)</option>
-            <option value="y">y (scaly)</option>
-            <option value="k">k (silky)</option>
-            <option value="s">s (smooth)</option>
-        </select>
-
-        <br>
-
-        <label for="stalk-color-above-ring">stalk-color-above-ring:</label>
-        <select id="stalk-color-above-ring" name="stalk-color-above-ring">
-            <option value="n">n (brown)</option>
-            <option value="b">b (buff)</option>
-            <option value="c">c (cinnamon)</option>
-            <option value="g">g (gray)</option>
-            <option value="o">o (orange)</option>
-            <option value="p">p (pink)</option>
-            <option value="e">e (red)</option>
-            <option value="w">w (white)</option>
-            <option value="y">y (yellow)</option>
-        </select>
-
-        <label for="stalk-color-below-ring">stalk-color-below-ring:</label>
-        <select id="stalk-color-below-ring" name="stalk-color-below-ring">
-            <option value="n">n (brown)</option>
-            <option value="b">b (buff)</option>
-            <option value="c">c (cinnamon)</option>
-            <option value="g">g (gray)</option>
-            <option value="o">o (orange)</option>
-            <option value="p">p (pink)</option>
-            <option value="e">e (red)</option>
-            <option value="w">w (white)</option>
-            <option value="y">y (yellow)</option>
-        </select>
-
-        <br>
-
-        <label for="veil-type">veil-type:</label>
-        <select id="veil-type" name="veil-type">
-            <option value="p">p (partial)</option>
-            <option value="u">u (universal)</option>
-        </select>
-
- 
-        <label for="veil-color">veil-color:</label>
-        <select id="veil-color" name="veil-color">
-            <option value="n">n (brown)</option>
-            <option value="o">o (orange)</option>
-            <option value="w">w (white)</option>
-            <option value="y">y (yellow)</option>
-        </select>
-
-        <br>
-
-   
-        <label for="ring-number">ring-number:</label>
-        <select id="ring-number" name="ring-number">
-            <option value="n">n (none)</option>
-            <option value="o">o (one)</option>
-            <option value="t">t (two)</option>
-        </select>
-
-
-        <label for="ring-type">ring-type:</label>
-        <select id="ring-type" name="ring-type">
-            <option value="c">c (cobwebby)</option>
-            <option value="e">e (evanescent)</option>
-            <option value="f">f (flaring)</option>
-            <option value="l">l (large)</option>
-            <option value="n">n (none)</option>
-            <option value="p">p (pendant)</option>
-            <option value="s">s (sheathing)</option>
-            <option value="z">z (zone)</option>
-        </select>
-
-        <br>
-        
-        <label for="spore-print-color">spore-print-color:</label>
-        <select id="spore-print-color" name="spore-print-color">
-            <option value="k">k (black)</option>
-            <option value="n">n (brown)</option>
-            <option value="b">b (buff)</option>
-            <option value="h">h (chocolate)</option>
-            <option value="r">r (green)</option>
-            <option value="o">o (orange)</option>
-            <option value="u">u (purple)</option>
-            <option value="w">w (white)</option>
-            <option value="y">y (yellow)</option>
-        </select>
-
-        <br>
-        <label for="population">population:</label>
-        <select id="population" name="population">
-            <option value="a">a (abundant)</option>
-            <option value="c">c (clustered)</option>
-            <option value="n">n (numerous)</option>
-            <option value="s">s (scattered)</option>
-            <option value="v">v (several)</option>
-            <option value="y">y (solitary)</option>
-        </select>
-
-        <br>
-        <label for="habitat">habitat:</label>
-        <select id="habitat" name="habitat">
-            <option value="g">g (grasses)</option>
-            <option value="l">l (leaves)</option>
-            <option value="m">m (meadows)</option>
-            <option value="p">p (paths)</option>
-            <option value="u">u (urban)</option>
-            <option value="w">w (waste)</option>
-            <option value="d">d (woods)</option>
-        </select>
-
-        
-        
-        <button type="submit">Phân loại</button>
-    </form>
-
-    <!-- Form tải lên file CSV -->
-    <form method="post" action="/predict" enctype="multipart/form-data">
-        <input type="hidden" name="form-type" value="csv">
-        <label for="file">Tải lên file CSV:</label>
-        <input type="file" id="file" name="file">
-        <button type="submit">Phân loại từ file CSV</button>
-    </form>
-
-    {% if result %}
-    <h2>Kết quả:</h2>
-    <ul>
-
-        <li>{{ result }}</li>
-
-    </ul>
-    {% endif %}
-</body>
+        </div>
+    </body>
 </html>

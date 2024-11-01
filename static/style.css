@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #007bff;
+}
+
+h2 {
+    margin-top: 30px;
+    color: #28a745;
+}
+
+
+form {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+select {
+    width: 60%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+}
+
+
+button {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+
+@media (max-width: 768px) {
+
+    .col-8,
+    .col-3 {
+        flex: 0 0 100%;
+
+        max-width: 90%;
+    }
+}
+
+.table {
+    width: 95%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    border: 2px solid rgb(0, 0, 0);
+}
+
+.table thead {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.table th {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+}
+
+
+.table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table td {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table label {
+    font-weight: bold;
+}
+
+.table select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff7f7;
+}
+
+
+@media (max-width: 600px) {
+    .table {
+        font-size: 14px;
+    }
+}
+
+.table thead {
+    background-color: #4CAF50;
+    color: #ffffff;
+}
+
+.table thead th {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.table thead tr:hover {
+    background-color: #45a049;
+}
+
+.table thead th {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #a7aeb6d8;
+}
+
+/* .col-4{
+    width: 40%;
+} */
