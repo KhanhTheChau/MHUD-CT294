@@ -28,5 +28,6 @@ def FindName():
     response = model.generate_content(prompt)
     print(response.text)
     
-    
     return response.text
+
+# print(FindName())

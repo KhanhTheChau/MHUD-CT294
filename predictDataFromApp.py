@@ -70,7 +70,7 @@ class PredictDataFromFeatures:
         self.Transform()
         self.ReplaceMissingByAVG()
         result = model.predict([self.transformed_data])  
-        return "Ăn được" if result == 0 else "Độc"
+        return "edible" if result == 0 else "poisonous"
 
 class PredictDataFromCSV:
     def __init__(self, data):
@@ -107,7 +107,7 @@ class PredictDataFromCSV:
         self.LabelData()
         self.ReplaceMissingByAVG()
 
-        label = ["Can Eat", "Posion"]
+        label = ["edible", "poisonous"]
         predict = model.predict(self.encode_data.values)
         predict = [label[i] for i in predict]
         self.data["Predict"] = predict
