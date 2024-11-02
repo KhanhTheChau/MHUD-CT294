@@ -1,4 +1,4 @@
-api_key = "AIzaSyDA68zSuHD0IL4AEm06XYSPwBWZs8Wu4_Y"
+api_key = ""
 
 import google.generativeai as genai
 
@@ -42,7 +42,6 @@ prompt_dict = {
         "v": "several"
     }
 }
-
 
 def FindName(prompt):
     model = genai.GenerativeModel('gemini-1.5-flash')
