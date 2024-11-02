@@ -33,5 +33,5 @@ def download_images(search_term, num_images=5):
             print(f"Lỗi khi tải hình ảnh: {e}")
 
 # Ví dụ sử dụng
-search_term = "Chlorophyllum-molybdites"  # Từ khóa tìm kiếm
-download_images(search_term, num_images=4)  # Tải 5 hình ảnh
+# search_term = "Chlorophyllum-molybdites"  # Từ khóa tìm kiếm
+# download_images(search_term, num_images=4)  # Tải 5 hình ảnh
